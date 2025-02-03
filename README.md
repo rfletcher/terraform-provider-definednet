@@ -4,7 +4,7 @@ An unofficial [Terraform](https://www.terraform.io) provider for the
 [Defined Networking API](https://docs.defined.net/api/defined-networking-api/).
 
 > [!WARNING]
-> This is functional, but very incomplete!
+> This is functional, but very incomplete! See [TODO](#TODO).
 
 # Quick Start
 
@@ -66,3 +66,14 @@ Changes to Outputs:
       + rpi-2         = "100.100.0.3"
     }
 ```
+
+# TODO
+
+- [x] Basic API client
+- [x] API client <-> Terraform Provider plumbing
+- [x] Initial data source (Hosts)
+- [ ] Tests!
+- [ ] Support for API pagination
+- [ ] Support for API filtering
+- [ ] Read support for more than just Hosts
+- [ ] Maybe, one day, support for writing
