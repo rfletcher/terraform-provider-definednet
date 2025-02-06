@@ -8,7 +8,8 @@ An unofficial [Terraform](https://www.terraform.io) provider for the
 
 # Quick Start
 
-This provider is only available locally, through Terraform's
+This provider isn't available from the Terraform Registry. To use it locally,
+build the binary and configure Terraform's
 [development overrides](https://developer.hashicorp.com/terraform/cli/config/config-file#development-overrides-for-provider-developers):
 
 1. Install [Terraform](https://developer.hashicorp.com/terraform/install) and
@@ -26,46 +27,7 @@ This provider is only available locally, through Terraform's
         }
 
 4. Run `make` to build and install
-5. Run `TF_DN_API_KEY=<api-key> terraform -chdir=examples/quick-start plan`, and
-   you should see some host data, read from the Defined API
-
-```
-╷
-│ Warning: Provider development overrides are in effect
-│
-│ The following provider development overrides are set in the CLI configuration:
-│  - rfletcher/definednet in /path/to/your/bin
-│
-│ The behavior may therefore not match any released version of the provider
-│ and applying changes may cause the state to become incompatible with
-│ published releases.
-╵
-data.definednet_hosts.all: Reading...
-data.definednet_hosts.all: Read complete after 0s
-
-Changes to Outputs:
-  + sample_host      = {
-      + created_at      = "2024-05-27T18:05:44Z"
-      + id              = "host-ABC123"
-      + ip_address      = "100.100.0.2"
-      + is_blocked      = false
-      + is_lighthouse   = false
-      + is_relay        = false
-      + listen_port     = 4242
-      + name            = "rpi-1"
-      + network_id      = "network-ABC123"
-      + organization_id = "org-ABC123"
-      + role_id         = "role-ABC123"
-    }
-  + lighthouse_ips = [
-      + "100.100.0.1",
-    ]
-  + node_name_ip_map = {
-      + lighthouse-1  = "100.100.0.1"
-      + rpi-1         = "100.100.0.2"
-      + rpi-2         = "100.100.0.3"
-    }
-```
+5. Try out the ["quick start" example](examples/quick-start/README.md)
 
 # TODO
 
