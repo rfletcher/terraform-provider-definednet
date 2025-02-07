@@ -4,8 +4,8 @@ A simple module which reads host details from the Defined Networking API, and
 displays them in the Terraform plan.
 
 1. [Build the `terraform-provider-definednet` binary](../../README.md#quick-start)
-2. Run `terraform plan`, setting the equired variable, and it should show a plan
-   similar to the one below
+2. Run `terraform plan`, setting the required variable, and you should see a
+   plan similar to the one below.
 
 ```
 $ terraform plan -var definednet_api_key=<key>

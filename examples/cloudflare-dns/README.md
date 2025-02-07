@@ -12,8 +12,8 @@ Networking hosts.
 
 1. [Build the `terraform-provider-definednet` binary](../../README.md#quick-start)
 2. Run `terraform init`, to install the cloudflare plugin
-3. Run `terraform plan`, setting the three required variables, and it should
-   show a plan similar to the one below
+3. Run `terraform plan`, setting the three required variables, and you should
+   see should a plan similar to the one below
 
 ```
 $ terraform plan \
