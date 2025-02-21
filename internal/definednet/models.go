@@ -1,25 +1,25 @@
 package definednet
 
 type HostsResponse struct {
-	Hosts    []Host             `json:"data"`
+	Hosts []Host `json:"data"`
 	// Metadata []ResponseMetadata `json:"metadata"` // TODO
 }
 
 type Host struct {
-	ID              string         `json:"id"`
-	OrganizationId  string         `json:"organizationId"`
-	NetworkId       string         `json:"networkId"`
-	RoleId          string         `json:"roleId"`
-	Name            string         `json:"name"`
-	IpAddress       string         `json:"ipAddress"`
-	StaticAddresses []string       `json:"staticAddresses"`
-	ListenPort      int            `json:"listenPort"`
-	IsBlocked       bool           `json:"isBlocked"`
-	IsLighthouse    bool           `json:"isLighthouse"`
-	IsRelay         bool           `json:"isRelay"`
-	CreatedAt       string         `json:"createdAt"`
+	ID              string   `json:"id"`
+	OrganizationId  string   `json:"organizationId"`
+	NetworkId       string   `json:"networkId"`
+	RoleId          string   `json:"roleId"`
+	Name            string   `json:"name"`
+	IpAddress       string   `json:"ipAddress"`
+	StaticAddresses []string `json:"staticAddresses"`
+	ListenPort      int      `json:"listenPort"`
+	IsBlocked       bool     `json:"isBlocked"`
+	IsLighthouse    bool     `json:"isLighthouse"`
+	IsRelay         bool     `json:"isRelay"`
+	CreatedAt       string   `json:"createdAt"`
 	// Metadata        []HostMetadata `json:"metadata"` // TODO
-	Tags            []string       `json:"tags"`
+	Tags []string `json:"tags"`
 }
 
 type HostMetadata struct {

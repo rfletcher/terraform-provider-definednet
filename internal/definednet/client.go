@@ -18,7 +18,7 @@ func NewClient(apiKey string) (*Client, error) {
 	c := Client{
 		apiKey:     apiKey,
 		baseUrl:    BASE_URL,
-		httpClient: &http.Client {},
+		httpClient: &http.Client{},
 	}
 
 	return &c, nil

@@ -10,6 +10,6 @@ lint:
 	golangci-lint run
 
 fmt:
-	go fmt .
+	go fmt ./...
 
 .PHONY: fmt lint build install
