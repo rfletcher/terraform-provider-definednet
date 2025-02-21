@@ -29,18 +29,18 @@ type hostsDataSourceModel struct {
 }
 
 type hostModel struct {
-	ID             types.String        `tfsdk:"id"`
-	Name           types.String        `tfsdk:"name"`
-	OrganizationId types.String        `tfsdk:"organization_id"`
-	NetworkId      types.String        `tfsdk:"network_id"`
-	RoleId         types.String        `tfsdk:"role_id"`
-	IpAddress      types.String        `tfsdk:"ip_address"`
-	ListenPort     types.Int64         `tfsdk:"listen_port"`
-	IsBlocked      types.Bool          `tfsdk:"is_blocked"`
-	IsLighthouse   types.Bool          `tfsdk:"is_lighthouse"`
-	IsRelay        types.Bool          `tfsdk:"is_relay"`
-	CreatedAt      types.String        `tfsdk:"created_at"`
-	Metadata       []hostMetadataModel `tfsdk:"metadata"`
+	ID             types.String      `tfsdk:"id"`
+	Name           types.String      `tfsdk:"name"`
+	OrganizationId types.String      `tfsdk:"organization_id"`
+	NetworkId      types.String      `tfsdk:"network_id"`
+	RoleId         types.String      `tfsdk:"role_id"`
+	IpAddress      types.String      `tfsdk:"ip_address"`
+	ListenPort     types.Int64       `tfsdk:"listen_port"`
+	IsBlocked      types.Bool        `tfsdk:"is_blocked"`
+	IsLighthouse   types.Bool        `tfsdk:"is_lighthouse"`
+	IsRelay        types.Bool        `tfsdk:"is_relay"`
+	CreatedAt      types.String      `tfsdk:"created_at"`
+	Metadata       hostMetadataModel `tfsdk:"metadata"`
 	// StaticAddresses []types.String      `tfsdk:"static_addresses"` // TODO
 }
 
@@ -113,22 +113,20 @@ func (d *hostsDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, 
 						"created_at": schema.StringAttribute{
 							Computed: true,
 						},
-						"metadata": schema.MapNestedAttribute{
+						"metadata": schema.SingleNestedAttribute{
 							Computed: true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"last_seen_at": schema.StringAttribute{
-										Computed: true,
-									},
-									"version": schema.StringAttribute{
-										Computed: true,
-									},
-									"platform": schema.StringAttribute{
-										Computed: true,
-									},
-									"update_available": schema.BoolAttribute{
-										Computed: true,
-									},
+							Attributes: map[string]schema.Attribute{
+								"last_seen_at": schema.StringAttribute{
+									Computed: true,
+								},
+								"version": schema.StringAttribute{
+									Computed: true,
+								},
+								"platform": schema.StringAttribute{
+									Computed: true,
+								},
+								"update_available": schema.BoolAttribute{
+									Computed: true,
 								},
 							},
 						},
@@ -151,7 +149,6 @@ func (d *hostsDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		return
 	}
 
-	// Map response body to model
 	for _, host := range hosts {
 		hostState := hostModel{
 			ID:             types.StringValue(host.ID),
@@ -165,14 +162,19 @@ func (d *hostsDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 			IsLighthouse:   types.BoolValue(host.IsLighthouse),
 			IsRelay:        types.BoolValue(host.IsRelay),
 			CreatedAt:      types.StringValue(host.CreatedAt),
-			// StaticAddresses []]types.String      `tfsdk:"static_addresses"` // TODO
-			// Metadata        []hostMetadataModel `tfsdk:"metadata"` // TODO
+			// StaticAddresses: []types.String      `tfsdk:"static_addresses"` // TODO
+		}
+
+		hostState.Metadata = hostMetadataModel{
+			LastSeenAt:      types.StringValue(host.Metadata.LastSeenAt),
+			Version:         types.StringValue(host.Metadata.Version),
+			Platform:        types.StringValue(host.Metadata.Platform),
+			UpdateAvailable: types.BoolValue(host.Metadata.UpdateAvailable),
 		}
 
 		state.Hosts = append(state.Hosts, hostState)
 	}
 
-	// Set state
 	diags := resp.State.Set(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
