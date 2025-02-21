@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 )
 
 const BASE_URL string = "https://api.defined.net/v1"
+const RECORDS_PER_PAGE string = "100"
 
 type Client struct {
 	apiKey     string
@@ -24,13 +26,14 @@ func NewClient(apiKey string) (*Client, error) {
 	return &c, nil
 }
 
-func (c *Client) get(path string) ([]byte, error) {
-	return c.request(http.MethodGet, path)
+func (c *Client) get(path string, params url.Values) ([]byte, error) {
+	return c.request(http.MethodGet, path, params)
 }
 
-// TODO pagination, filtering, etc.
-func (c *Client) request(method string, path string) ([]byte, error) {
-	url := fmt.Sprintf("%s/%s", c.baseUrl, path)
+func (c *Client) request(method string, path string, params url.Values) ([]byte, error) {
+	params.Set("pageSize", RECORDS_PER_PAGE)
+
+	url := fmt.Sprintf("%s/%s?%s", c.baseUrl, path, params.Encode())
 
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
